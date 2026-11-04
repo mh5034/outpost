@@ -7,7 +7,9 @@ export async function checkUser() {
   const clerkUser = await currentUser();
   if (!clerkUser) return null;
 
-  const existing = prisma.user.findUnique({ where: { clerkId: clerkUser.id } });
+  const existing = await prisma.user.findUnique({
+    where: { clerkId: clerkUser.id },
+  });
 
   if (existing) return existing;
 
