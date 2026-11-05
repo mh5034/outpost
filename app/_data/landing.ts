@@ -84,8 +84,8 @@ export const landingCopy = {
   pricing: {
     eyebrow: "Straightforward plans",
     heading: "Pricing",
-    description: "Pricing details are on the way. Join us early and help shape what comes next.",
-    action: "Get early access",
+    description:
+      "Upgrade your account or your team's account. Billed per member",
   },
   closingCta: {
     eyebrow: "Your next idea starts here",

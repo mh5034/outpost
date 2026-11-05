@@ -11,6 +11,11 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { landingCopy } from "./_data/landing";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PricingTable } from "@clerk/nextjs";
+
+const PRICING_TAB =
+  "rounded-full px-5 py-1.5 data-active:bg-primary data-active:text-primary-foreground dark:data-active:bg-primary dark:data-active:text-primary-foreground";
 
 const featureIcons = {
   canvas: Workflow,
@@ -356,7 +361,7 @@ export default function Home() {
         aria-labelledby="pricing-heading"
         className="px-6 py-24 md:px-10 md:py-32"
       >
-        <div className="mx-auto max-w-3xl rounded-2xl border border-white/8 bg-white/[0.02] px-6 py-12 text-center sm:px-12">
+        <div className="mx-auto mb-12 max-w-5xl text-center">
           <p className="mb-4 font-mono text-xs tracking-[0.16em] text-primary uppercase">
             {landingCopy.pricing.eyebrow}
           </p>
@@ -366,12 +371,28 @@ export default function Home() {
           >
             {landingCopy.pricing.heading}
           </h2>
-          <p className="mx-auto mt-5 max-w-xl leading-7 text-muted-foreground">
+          <p className="mx-auto mt-5 max-w-xl leading-7 text-muted-foreground mb-12">
             {landingCopy.pricing.description}
           </p>
-          <Button asChild size="lg" className="mt-8 h-11 px-6 text-sm">
-            <Link href="/sign-up">{landingCopy.pricing.action}</Link>
-          </Button>
+          <Tabs
+            defaultValue="user"
+            className="mx-auto max-w-5xl items-center gap-10"
+          >
+            <TabsList className="h-auto rounded-full border border-white/10 bg-white/3 p-1">
+              <TabsTrigger value="user" className={PRICING_TAB}>
+                Personal
+              </TabsTrigger>
+              <TabsTrigger value="organization" className={PRICING_TAB}>
+                Team
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="user" className="w-full">
+              <PricingTable for="user" />
+            </TabsContent>
+            <TabsContent value="organization" className="w-full">
+              <PricingTable for="organization" />
+            </TabsContent>
+          </Tabs>
         </div>
       </section>
 
