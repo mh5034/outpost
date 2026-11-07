@@ -1,9 +1,12 @@
-import React from 'react'
+import { WorkspaceCardData } from "@/components/WorkspaceCard";
+import React from "react";
 
-const RecentWorkspaces = () => {
-  return (
-    <div>RecentWorkspaces</div>
-  )
-}
+const RecentWorkspaces = ({
+  workspaces,
+}: {
+  workspaces: WorkspaceCardData[];
+}) => {
+  return <div>RecentWorkspaces</div>;
+};
 
-export default RecentWorkspaces
+export default RecentWorkspaces;
