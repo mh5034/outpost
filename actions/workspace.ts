@@ -104,3 +104,20 @@ export async function moveWorkspace(
     data: { status, position },
   });
 }
+
+export async function updateWorkspace(workspaceId: string, name: string) {
+  if (!(await canAcessWorkspace(workspaceId)))
+    throw new Error("Workspace not found");
+
+  const trimmedName = name.trim();
+  if (!trimmedName) throw new Error("Workspace name is required");
+
+  const workspace = await prisma.workspace.update({
+    where: { id: workspaceId },
+    data: { name: trimmedName },
+  });
+
+  revalidateWorkspacesLists();
+  revalidatePath(`/workspace/${workspaceId}`);
+  return workspace;
+}
