@@ -13,6 +13,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CanvasEditor } from "./_components/CanvasEditor";
 import { TLEditorSnapshot } from "tldraw";
+import { DocEditor } from "../../../../components/DocEditorLoader";
+import { Block } from "@blocknote/core";
 
 type ViewMode = "doc" | "canvas" | "both";
 
@@ -97,11 +99,11 @@ const WorkspacePage = async ({
         >
           {showDoc && (
             <ResizablePanel defaultSize={25} minSize={20}>
-              {/* <DocEditor
+              <DocEditor
                 key={id}
                 workspaceId={id}
                 initialContent={workspace.doc?.content as Block[] | null}
-              /> */}
+              />
             </ResizablePanel>
           )}
 
