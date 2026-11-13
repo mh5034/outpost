@@ -30,7 +30,7 @@ const WorkspacePage = async ({
   const { view: viewParam, prompt } = await searchParams;
   const view = parseViewMode(viewParam);
 
-  if (!canAccessWorkspace(id)) notFound();
+  if (!(await canAccessWorkspace(id))) notFound();
 
   const workspace = await prisma.workspace.findUnique({
     where: { id },

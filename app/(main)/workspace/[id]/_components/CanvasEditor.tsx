@@ -36,6 +36,9 @@ const shapeUtils = [EntityTableShapeUtil];
 // Our own sync server (the tldraw-sync/ Cloudflare Worker). Without it, tldraw's public demo
 // server is used: fine for trying things out, but rooms there are public and get wiped.
 const SYNC_URL = process.env.NEXT_PUBLIC_TLDRAW_SYNC_URL;
+const SYNC_CONNECT_URL = SYNC_URL
+  ? `${SYNC_URL.replace(/\/+$/, "")}/connect`
+  : undefined;
 
 // Unlike useSyncDemo, useSync doesn't add tldraw's built-in shapes itself. Built once here:
 // a new array on every render would make useSync rebuild the store in a loop.
@@ -44,10 +47,10 @@ const syncShapeUtils = [...defaultShapeUtils, ...shapeUtils];
 type SyncOptions = { roomId: string; users?: Parameters<typeof useSyncDemo>[0]["users"] };
 
 // Chosen once at load, so it's always the same hook. Images are stored inside the room.
-const useCanvasSync = SYNC_URL
+const useCanvasSync = SYNC_CONNECT_URL
   ? ({ roomId, users }: SyncOptions) =>
       useSync({
-        uri: `${SYNC_URL}/connect/${roomId}`,
+        uri: `${SYNC_CONNECT_URL}/${encodeURIComponent(roomId)}`,
         assets: inlineBase64AssetStore,
         shapeUtils: syncShapeUtils,
         bindingUtils: defaultBindingUtils,
