@@ -3,7 +3,7 @@ import { prisma } from "./prisma";
 import { workspaceOwnerSelect } from "./billing";
 
 // Org workspaces are open to every member of that org; personal (org-less) ones only to their creator.
-export async function canAcessWorkspace(workspaceId: string) {
+export default async function canAcessWorkspace(workspaceId: string) {
   const { userId, orgId } = await auth();
   if (!userId) return false;
 

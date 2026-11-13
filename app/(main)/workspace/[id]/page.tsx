@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/resizable";
 import { WorkspaceEditorsProvider } from "@/components/WorkspaceEditorsContext";
 import { prisma } from "@/lib/prisma";
-import { canAcessWorkspace } from "@/lib/workspace-access";
+import canAcessWorkspace from "@/lib/workspace-access";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -36,7 +36,7 @@ const WorkspacePage = async ({
     select: {
       name: true,
       canvas: { select: { content: true } },
-      doc: { select: { content: true } },
+      doc: { select: { content: true, yjsState: true } },
     },
   });
 
@@ -103,6 +103,11 @@ const WorkspacePage = async ({
                 key={id}
                 workspaceId={id}
                 initialContent={workspace.doc?.content as Block[] | null}
+                initialState={
+                  workspace.doc?.yjsState
+                    ? Buffer.from(workspace.doc.yjsState).toString("base64")
+                    : null
+                }
               />
             </ResizablePanel>
           )}
