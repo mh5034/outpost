@@ -7,7 +7,7 @@ import { scopeWhere } from "@/lib/workspace-scope";
 import { getEntitlements, workspaceOwnerSelect } from "@/lib/billing";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { canAcessWorkspace } from "@/lib/workspace-access";
+import canAcessWorkspace from "@/lib/workspace-access";
 import { WorkspaceStatus } from "@/lib/generated/prisma/enums";
 
 function revalidateWorkspacesLists() {

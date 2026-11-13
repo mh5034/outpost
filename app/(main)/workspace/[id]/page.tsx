@@ -15,6 +15,7 @@ import { CanvasEditor } from "./_components/CanvasEditor";
 import { TLEditorSnapshot } from "tldraw";
 import { DocEditor } from "../../../../components/DocEditorLoader";
 import { Block } from "@blocknote/core";
+import { AgentToggleButton } from "./_components/AgentToggleButton";
 
 type ViewMode = "doc" | "canvas" | "both";
 
@@ -26,7 +27,7 @@ const WorkspacePage = async ({
   searchParams,
 }: PageProps<"/workspace/[id]">) => {
   const { id } = await params;
-  const { view: viewParam } = await searchParams;
+  const { view: viewParam, prompt } = await searchParams;
   const view = parseViewMode(viewParam);
 
   if (!canAcessWorkspace(id)) notFound();
@@ -89,7 +90,12 @@ const WorkspacePage = async ({
             ))}
           </div>
 
-          <div className="flex flex-1 items-center justify-end gap-2"></div>
+          <div className="flex flex-1 items-center justify-end gap-2">
+            <AgentToggleButton
+              workspaceId={id}
+              initialPrompt={typeof prompt === "string" ? prompt : undefined}
+            />
+          </div>
         </header>
 
         <ResizablePanelGroup

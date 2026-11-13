@@ -2,7 +2,7 @@
 
 import { Prisma } from "@/lib/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
-import { canAcessWorkspace } from "@/lib/workspace-access";
+import canAcessWorkspace from "@/lib/workspace-access";
 
 export async function saveCanvasContent(
   workspaceId: string,
