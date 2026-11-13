@@ -231,7 +231,7 @@ export default function Home() {
 
       <section
         aria-label="Who it's for"
-        className="border-y border-white/6 bg-white/[0.02] px-6 py-6 md:px-10"
+        className="border-y border-white/6 bg-white/2 px-6 py-6 md:px-10"
       >
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-muted-foreground sm:gap-x-12">
           <span className="font-mono text-[10px] tracking-[0.16em] text-muted-foreground/60 uppercase">
@@ -311,7 +311,7 @@ export default function Home() {
       <section
         id="how-it-works"
         aria-labelledby="how-it-works-heading"
-        className="border-y border-white/6 bg-white/[0.02] px-6 py-24 md:px-10 md:py-32"
+        className="border-y border-white/6 bg-white/2 px-6 py-24 md:px-10 md:py-32"
       >
         <div className="mx-auto max-w-6xl">
           <header className="mx-auto mb-16 max-w-3xl text-center">
