@@ -7,7 +7,7 @@ import { scopeWhere } from "@/lib/workspace-scope";
 import { getEntitlements, workspaceOwnerSelect } from "@/lib/billing";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import canAcessWorkspace from "@/lib/workspace-access";
+import canAccessWorkspace from "@/lib/workspace-access";
 import { WorkspaceStatus } from "@/lib/generated/prisma/enums";
 
 function revalidateWorkspacesLists() {
@@ -62,7 +62,7 @@ export async function createWorkspace(
 
 export async function deleteWorkspace(workspaceId: string) {
   const { userId, orgId, orgRole } = await auth();
-  if (!userId || !(await canAcessWorkspace(workspaceId)))
+  if (!userId || !(await canAccessWorkspace(workspaceId)))
     throw new Error("Workspace not found");
 
   const workspace = await prisma.workspace.findFirstOrThrow({
@@ -96,7 +96,7 @@ export async function moveWorkspace(
     throw new Error("Invalid move");
   }
 
-  if (!(await canAcessWorkspace(workspaceId)))
+  if (!(await canAccessWorkspace(workspaceId)))
     throw new Error("Workspace not found");
 
   await prisma.workspace.update({
@@ -105,8 +105,13 @@ export async function moveWorkspace(
   });
 }
 
-export async function updateWorkspace(workspaceId: string, name: string) {
-  if (!(await canAcessWorkspace(workspaceId)))
+// Leaving description undefined keeps it as-is (the header's inline rename only sends a name).
+export async function updateWorkspace(
+  workspaceId: string,
+  name: string,
+  description?: string,
+) {
+  if (!(await canAccessWorkspace(workspaceId)))
     throw new Error("Workspace not found");
 
   const trimmedName = name.trim();
@@ -114,7 +119,12 @@ export async function updateWorkspace(workspaceId: string, name: string) {
 
   const workspace = await prisma.workspace.update({
     where: { id: workspaceId },
-    data: { name: trimmedName },
+    data: {
+      name: trimmedName,
+      ...(description !== undefined && {
+        description: description.trim() || null,
+      }),
+    },
   });
 
   revalidateWorkspacesLists();

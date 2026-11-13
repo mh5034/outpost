@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { getWorkspaceScope } from "@/lib/workspace-scope";
 import { withLastActivity, workspaceCardSelect } from "@/lib/workspace-status";
 import { Button } from "@/components/ui/button";
-import WorkspaceDialog from "@/components/WorkspaceDialog";
+import { WorkspaceDialog } from "@/components/WorkspaceDialog";
 import { WorkspaceBoard } from "./_components/WorkspaceBoard";
 
 const WorkspacesPage = async () => {

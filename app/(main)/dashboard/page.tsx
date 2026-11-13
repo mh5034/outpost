@@ -7,7 +7,7 @@ import { KanbanSquare, Plus } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import RecentWorkspaces from "./_components/RecentWorkspaces";
-import WorkspaceDialog from "@/components/WorkspaceDialog";
+import { WorkspaceDialog } from "@/components/WorkspaceDialog";
 import { DashboardPrompt } from "./_components/DashboardPrompt";
 
 const RECENT_COUNT = 4;

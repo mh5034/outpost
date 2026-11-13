@@ -1,7 +1,8 @@
 import { checkUser } from "@/actions/check-user";
-import canAcessWorkspace from "@/lib/workspace-access";
+import canAccessWorkspace from "@/lib/workspace-access";
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
 import { google } from "@ai-sdk/google";
+import { agentToolDefs } from "@/lib/agent-tools";
 
 const SYSTEM_PROMPT = `You are Outpost's workspace agent. A workspace has two surfaces: a canvas (an infinite whiteboard for diagrams) and a doc (a rich-text document). You change them only by calling tools, never by describing changes in text. Never use em dashes in your replies.
 
@@ -48,7 +49,7 @@ export async function POST(req: Request) {
     docContext: string | null;
   } = await req.json();
 
-  if (!canAcessWorkspace(workspaceId))
+  if (!canAccessWorkspace(workspaceId))
     return new Response("Workspace not found", { status: 404 });
 
   const result = streamText({
@@ -56,6 +57,7 @@ export async function POST(req: Request) {
     system: `${SYSTEM_PROMPT}\n\nCurrent canvas state:${canvasContext ?? NOT_OPEN}\n\nCurrent doc state:${docContext ?? NOT_OPEN}`,
     messages: await convertToModelMessages(messages),
     providerOptions: { googel: { thinkingConfig: { includeThoughts: true } } },
+    tools: agentToolDefs,
   });
 
   return result.toUIMessageStreamResponse({ sendReasoning: true });

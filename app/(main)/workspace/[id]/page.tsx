@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/resizable";
 import { WorkspaceEditorsProvider } from "@/components/WorkspaceEditorsContext";
 import { prisma } from "@/lib/prisma";
-import canAcessWorkspace from "@/lib/workspace-access";
+import canAccessWorkspace from "@/lib/workspace-access";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -30,7 +30,7 @@ const WorkspacePage = async ({
   const { view: viewParam, prompt } = await searchParams;
   const view = parseViewMode(viewParam);
 
-  if (!canAcessWorkspace(id)) notFound();
+  if (!canAccessWorkspace(id)) notFound();
 
   const workspace = await prisma.workspace.findUnique({
     where: { id },

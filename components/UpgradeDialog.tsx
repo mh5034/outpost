@@ -9,7 +9,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { PricingTable, useAuth } from "@clerk/nextjs";
-// import { PricingPlans } from "@/components/PricingPlans";
 
 type UpgradeReason = { title: string; description?: string };
 

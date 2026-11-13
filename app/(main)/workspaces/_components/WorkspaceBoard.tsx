@@ -13,7 +13,7 @@ import { deleteWorkspace, moveWorkspace } from "@/actions/workspace";
 import { useFetch } from "@/hooks/use-fetch";
 import type { WorkspaceStatus } from "@/lib/generated/prisma/enums";
 import { WORKSPACE_STATUSES } from "@/lib/workspace-status";
-import WorkspaceDialog from "@/components/WorkspaceDialog";
+import { WorkspaceDialog } from "@/components/WorkspaceDialog";
 import {
   WorkspaceCard,
   type WorkspaceCardData,
@@ -208,13 +208,13 @@ export function WorkspaceBoard({
         <WorkspaceDialog
           workspace={selected}
           open={openDialog === "edit"}
-          onOpenChange={(open) => !open && setOpenDialog(null)}
+          onOpenChange={(open: boolean) => !open && setOpenDialog(null)}
         />
       )}
 
       <AlertDialog
         open={openDialog === "delete"}
-        onOpenChange={(open) => !open && setOpenDialog(null)}
+        onOpenChange={(open: boolean) => !open && setOpenDialog(null)}
       >
         <AlertDialogContent>
           <AlertDialogHeader>
