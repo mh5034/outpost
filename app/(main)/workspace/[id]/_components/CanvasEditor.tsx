@@ -175,7 +175,7 @@ export function CanvasEditor({
         components={components}
         colorScheme="dark"
         shapeUtils={shapeUtils}
-        licenseKey={process.env.TLDRAW_LICENSE_KEY}
+        licenseKey={process.env.NEXT_PUBLIC_TLDRAW_LICENSE_KEY}
       />
     </div>
   );
