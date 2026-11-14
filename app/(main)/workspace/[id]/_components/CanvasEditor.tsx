@@ -44,7 +44,10 @@ const SYNC_CONNECT_URL = SYNC_URL
 // a new array on every render would make useSync rebuild the store in a loop.
 const syncShapeUtils = [...defaultShapeUtils, ...shapeUtils];
 
-type SyncOptions = { roomId: string; users?: Parameters<typeof useSyncDemo>[0]["users"] };
+type SyncOptions = {
+  roomId: string;
+  users?: Parameters<typeof useSyncDemo>[0]["users"];
+};
 
 // Chosen once at load, so it's always the same hook. Images are stored inside the room.
 const useCanvasSync = SYNC_CONNECT_URL
@@ -56,7 +59,8 @@ const useCanvasSync = SYNC_CONNECT_URL
         bindingUtils: defaultBindingUtils,
         users,
       })
-  : ({ roomId, users }: SyncOptions) => useSyncDemo({ roomId, shapeUtils, users });
+  : ({ roomId, users }: SyncOptions) =>
+      useSyncDemo({ roomId, shapeUtils, users });
 
 // A cleaner, single-page canvas: no style panel, page menu or main menu, and a vertical toolbar
 // on the left with our Add table button.
@@ -98,7 +102,7 @@ export function CanvasEditor({
           name: userName,
           color: colorForUser(userId),
           imageUrl: userImageUrl,
-        })
+        }),
       ),
     };
   }, [userId, userName, userImageUrl]);
@@ -136,12 +140,12 @@ export function CanvasEditor({
           // occasionally fail to cross the Server Action boundary as "opaque temporary reference"
           // errors — round-tripping through JSON strips those and leaves genuinely plain data.
           const plainSnapshot = JSON.parse(
-            JSON.stringify(editor.getSnapshot())
+            JSON.stringify(editor.getSnapshot()),
           ) as Prisma.InputJsonValue;
           saveCanvasContent(workspaceId, plainSnapshot);
         }, SAVE_DEBOUNCE_MS);
       },
-      { source: "user", scope: "document" }
+      { source: "user", scope: "document" },
     );
 
     // Arrows drawn onto an ERD table snap to the nearest row (see snapArrowToRow.ts).
@@ -153,7 +157,7 @@ export function CanvasEditor({
           }
         }
       },
-      { source: "user", scope: "all" }
+      { source: "user", scope: "all" },
     );
 
     // Clear it on unmount (e.g. switching to the Document view) so nothing keeps a disposed editor.
@@ -171,7 +175,7 @@ export function CanvasEditor({
         components={components}
         colorScheme="dark"
         shapeUtils={shapeUtils}
-        licenseKey={process.env.NEXT_PUBLIC_TLDRAW_LICENSE_KEY}
+        licenseKey={process.env.TLDRAW_LICENSE_KEY}
       />
     </div>
   );
